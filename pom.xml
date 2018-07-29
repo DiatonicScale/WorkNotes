@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>Test</groupId>
+    <artifactId>Test</artifactId>
+    <packaging>war</packaging>
+
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Test</name>
+    <url>Test</url>
+
+    <properties>
+        <java.version>1.9</java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <spring.version>4.2.3.RELEASE</spring.version>
+
+        <!-- Logging -->
+
+        <!--    Tests  -->
+
+        <!-- Hibernate -->
+
+    </properties>
+
+    <build>
+        <finalName>WorkNotes</finalName>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <!-- Logging -->
+
+
+        <!--Web-->
+
+
+        <!-- Spring -->
+
+
+        <!--DataBase-->
+
+
+        <!--Test-->
+
+
+    </dependencies>
+
+    <profiles>
+    </profiles>
+
+    <dependencyManagement>
+    </dependencyManagement>
+</project>
