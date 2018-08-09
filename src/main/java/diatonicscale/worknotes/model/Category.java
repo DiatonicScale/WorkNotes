@@ -1,14 +1,16 @@
-package ru.diatonicscale.worknotes.model;
+package diatonicscale.worknotes.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Note {
+public class Category {
+    private int id;
+    private int parentId; // Adjacency List
+
     private String name;
-    private List<Link> sources;
-    private boolean importance = false;
+
     private LocalDateTime creationTime;
     private LocalDateTime lastEditTime;
 
-    private Content value;
+
 }

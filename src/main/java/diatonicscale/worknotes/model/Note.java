@@ -1,0 +1,17 @@
+package diatonicscale.worknotes.model;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public class Note {
+    private int id;
+    private int category_id; // Needed?
+
+    private String name;
+    private List<Link> sources; // TODO: adding information source (book, person, blog) + filter by source
+    private boolean importance = false;
+    private LocalDateTime creationTime;
+    private LocalDateTime lastEditTime;
+
+    private String value;
+}
