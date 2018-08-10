@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +13,7 @@
     <input type="text" size="40">
 </p>
 
-<p><textarea name="comment" cols="40" rows="3"></textarea></p>
+<p><textarea name="comment" cols="40" rows="3">Hello World!</textarea></p>
 
 </body>
 </html>
