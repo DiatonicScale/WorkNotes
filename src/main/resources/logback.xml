@@ -9,7 +9,7 @@
     <jmxConfigurator/>
 
     <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>${WORKNOTES_ROOT}/log/topjava.log</file>
+        <file>${WORKNOTES_ROOT}/log/worknotes.log</file>
 
         <encoder>
             <charset>UTF-8</charset>
