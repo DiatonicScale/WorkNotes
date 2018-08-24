@@ -1,6 +1,6 @@
 package diatonicscale.worknotes.model;
 
-public class Link {
+public class Source {
     private String name;
     private String url;
 }
