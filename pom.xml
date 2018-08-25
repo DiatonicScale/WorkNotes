@@ -22,7 +22,8 @@
         <logback.version>1.2.3</logback.version>
         <!--    Tests  -->
 
-        <!-- Hibernate -->
+        <!-- Spring -->
+        <spring.version>5.0.8.RELEASE</spring.version>
 
     </properties>
 
@@ -85,6 +86,17 @@
 
 
         <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
 
         <!--DataBase-->

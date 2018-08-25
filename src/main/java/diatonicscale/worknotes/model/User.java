@@ -12,4 +12,8 @@ public class User {
 
     private Date registered; // тип данных?
     protected Set<Role> roles;
+
+    public int getId() {
+        return id;
+    }
 }

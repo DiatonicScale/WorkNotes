@@ -12,6 +12,10 @@ import diatonicscale.worknotes.model.Source;
 import java.util.List;
 
 public interface NotesService {
+
+
+
+
     Category addCategory(Category category, int userId);
 
     Note addNote(Note note, int userId);

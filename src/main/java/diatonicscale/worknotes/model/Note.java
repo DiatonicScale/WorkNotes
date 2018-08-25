@@ -8,7 +8,7 @@ public class Note {
     private int category_id; // Needed?
 
     private String name;
-    private List<Link> sources; // TODO: adding information source (book, person, blog) + filter by source
+    private List<Source> sources; // TODO: adding information source (book, person, blog) + filter by source
     private boolean importance = false;
     private LocalDateTime creationTime;
     private LocalDateTime lastEditTime;
