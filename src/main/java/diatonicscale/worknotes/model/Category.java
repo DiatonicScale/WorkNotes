@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Category {
     private int id;
-    //private int parentId; // Adjacency List
+    private int userId;
 
     private String name;
 

@@ -12,31 +12,32 @@ import diatonicscale.worknotes.model.Source;
 import java.util.List;
 
 public interface NotesService {
-
-
-
-
+    // Categories
     Category addCategory(Category category, int userId);
 
-    Note addNote(Note note, int userId);
+    void updateCategory(Category category, int userId);
 
-    void deleteCategory(int categoryId); // throws exception?
+    void deleteCategory(int categoryId, int userId);
 
-    void deleteNote(int noteId); // throws exception?
+    List<Category> getUserCategories(int userId);
 
-    void deleteCategoryNotes(int categoryId); // throws exception?
+    // Notes
+    Note addNote(Note note, int categoryId, int userId);
 
-    List<Category> getUserCategories(); // throws exception?
+    void updateNote(Note note, int categoryId, int userId);
 
-    //List<Category> getCategories(int parentId); // throws exception?, userId gets inside method and uses to call rep
+    void deleteNote(int noteId, int categoryId, int userId);
 
-    List<Note> getCategoryNotes(int categoryId); // throws exception?
+    void deleteCategoryNotes(int categoryId, int userId);
 
-    //List<CategoryWithNotes> getCategory(int parentId);
+    List<Note> getCategoryNotes(int categoryId, int userId);
 
-    void updateCategory(Category category);
+    List<Note> getUserNotes(int userId); // show all user notes
 
-    void updateNote(Note note);
+    Note getNote(int noteId, int categoryId, int userId);
 
-    List<Note> getBySource(Source source); // throws exception?
+
+    // TODO:
+    // List<Note> getBySource(Source source);
+    // List<Category> getUserCategoriesWithNotes(int userId); // lazy fetching of the List<Note> in Category needed?
 }
