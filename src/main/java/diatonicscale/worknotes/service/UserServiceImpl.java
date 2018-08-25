@@ -24,7 +24,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        return repository.save(user);
+        User savedUser = repository.save(user);
+        if (savedUser == null) {
+            LOGGER.error("User not saved");
+            throw new UserServiceException("Can't save user");
+        }
+        return savedUser;
     }
 
     @Override
