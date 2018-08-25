@@ -13,4 +13,7 @@ public class Category {
     private LocalDateTime lastEditTime;
 
 
+    public int getId() {
+        return id;
+    }
 }

@@ -14,4 +14,8 @@ public class Note {
     private LocalDateTime lastEditTime;
 
     private String value;
+
+    public int getId() {
+        return id;
+    }
 }

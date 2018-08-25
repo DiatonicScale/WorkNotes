@@ -5,7 +5,7 @@
 
 package diatonicscale.worknotes.service;
 
-import diatonicscale.worknotes.UserServiceException;
+import diatonicscale.worknotes.exception.UserServiceException;
 import diatonicscale.worknotes.model.User;
 import diatonicscale.worknotes.repository.UserRepository;
 import org.slf4j.Logger;
