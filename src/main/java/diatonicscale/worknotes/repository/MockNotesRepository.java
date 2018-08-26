@@ -3,12 +3,11 @@
  * Date: 25.08.2018
  */
 
-package diatonicscale.worknotes.repository.mock;
+package diatonicscale.worknotes.repository;
 
 import diatonicscale.worknotes.model.Category;
 import diatonicscale.worknotes.model.Note;
 import diatonicscale.worknotes.repository.NotesRepository;
-import diatonicscale.worknotes.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -19,8 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class MockNotesRepository implements NotesRepository {
-    private static final int USER_ID_ONE = 1;
-    private static final int USER_ID_TWO = 2;
+    private static final int USER_ID_ONE = 0;
+    private static final int USER_ID_TWO = 1;
 
 
     // userId -> (categoryId -> category)
