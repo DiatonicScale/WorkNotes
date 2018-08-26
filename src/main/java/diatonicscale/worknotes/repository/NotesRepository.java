@@ -16,18 +16,18 @@ public interface NotesRepository {
 
     boolean deleteCategory(int categoryId, int userId);
 
-    List<Category> getUserCategories(int userId);
+    List<Category> getUserCategories(int userId); // EmptyList if not found
 
     // Notes
     Note saveNote(Note note, int categoryId, int userId);
 
     boolean deleteNote(int noteId, int categoryId, int userId);
 
-    void deleteCategoryNotes(int categoryId, int userId);
+    boolean deleteCategoryNotes(int categoryId, int userId);
 
-    List<Note> getCategoryNotes(int categoryId, int userId);
+    List<Note> getCategoryNotes(int categoryId, int userId); // EmptyList if not found
 
-    List<Note> getUserNotes(int userId);
+    List<Note> getUserNotes(int userId); // EmptyList if not found
 
     Note getNote(int noteId, int categoryId, int userId);
 }

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Note {
-    private int id;
+    private Integer id;
     private Category parentCategory;
 
     private String name;
@@ -15,7 +15,26 @@ public class Note {
 
     private String value;
 
-    public int getId() {
+    public Note(Category parentCategory, String name, List<Source> sources, boolean importance, LocalDateTime creationTime, LocalDateTime lastEditTime, String value) {
+        this(null, parentCategory, name, sources, importance, creationTime, lastEditTime, value);
+    }
+
+    public Note(Integer id, Category parentCategory, String name, List<Source> sources, boolean importance, LocalDateTime creationTime, LocalDateTime lastEditTime, String value) {
+        this.id = id;
+        this.parentCategory = parentCategory;
+        this.name = name;
+        this.sources = sources;
+        this.importance = importance;
+        this.creationTime = creationTime;
+        this.lastEditTime = lastEditTime;
+        this.value = value;
+    }
+
+    public Integer getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
