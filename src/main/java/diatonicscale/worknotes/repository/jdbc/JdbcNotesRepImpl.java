@@ -38,8 +38,8 @@ public class JdbcNotesRepImpl implements NotesRepository {
     }
 
     @Override
-    public void deleteCategoryNotes(int categoryId, int userId) {
-
+    public boolean deleteCategoryNotes(int categoryId, int userId) {
+        return false;
     }
 
     @Override

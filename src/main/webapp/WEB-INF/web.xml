@@ -5,11 +5,11 @@
          version="3.1">
 
     <servlet>
-        <servlet-name>UsersServlet</servlet-name>
+        <servlet-name>UserServlet</servlet-name>
         <servlet-class>diatonicscale.worknotes.controller.UserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UsersServlet</servlet-name>
+        <servlet-name>UserServlet</servlet-name>
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
