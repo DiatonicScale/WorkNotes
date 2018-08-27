@@ -3,9 +3,10 @@
  * Date: 27.08.2018
  */
 
-package diatonicscale.worknotes.repository;
+package diatonicscale.worknotes.repository.mock;
 
 import diatonicscale.worknotes.model.User;
+import diatonicscale.worknotes.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

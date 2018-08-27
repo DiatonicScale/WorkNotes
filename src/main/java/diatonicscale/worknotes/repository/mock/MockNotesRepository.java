@@ -3,7 +3,7 @@
  * Date: 25.08.2018
  */
 
-package diatonicscale.worknotes.repository;
+package diatonicscale.worknotes.repository.mock;
 
 import diatonicscale.worknotes.model.Category;
 import diatonicscale.worknotes.model.Note;
@@ -72,6 +72,12 @@ public class MockNotesRepository implements NotesRepository {
         return  categoryMap != null
                 && categoryMap.remove(categoryId) != null
                 && categoryNotes.remove(categoryId) != null;
+    }
+
+    @Override
+    public Category getCategory(int categoryId, int userId) {
+        Map<Integer, Category> categoryMap = userCategories.get(userId);
+        return categoryMap == null ? null : categoryMap.get(categoryId);
     }
 
     @Override

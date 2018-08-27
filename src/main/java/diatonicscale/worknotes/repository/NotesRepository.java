@@ -14,6 +14,8 @@ public interface NotesRepository {
     // Categories
     Category saveCategory(Category category, int userId);
 
+    Category getCategory(int categoryId, int userId);
+
     boolean deleteCategory(int categoryId, int userId);
 
     List<Category> getUserCategories(int userId); // EmptyList if not found

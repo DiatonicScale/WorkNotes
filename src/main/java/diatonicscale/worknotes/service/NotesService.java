@@ -17,6 +17,8 @@ public interface NotesService {
 
     void updateCategory(Category category, int userId);
 
+    Category getCategory(int categoryId, int userId);
+
     void deleteCategory(int categoryId, int userId);
 
     List<Category> getUserCategories(int userId);

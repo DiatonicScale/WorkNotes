@@ -42,6 +42,16 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
+    public Category getCategory(int categoryId, int userId) {
+        Category category = repository.getCategory(categoryId, userId);
+        if (category == null) {
+            LOGGER.error("Category with id = " + categoryId + "not found");
+            throw new NotesServiceException("Can't find category with id = " + categoryId);
+        }
+        return category;
+    }
+
+    @Override
     public void deleteCategory(int categoryId, int userId) {
         if (!repository.deleteCategory(categoryId, userId)) {
             LOGGER.error("Category not deleted, id = " + categoryId);

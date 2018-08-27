@@ -29,10 +29,16 @@ public class NotesController {
         return service.addCategory(category, userId);
     }
 
-    void updateCategory(Category category){
+    void updateCategory(Category category) {
         int userId = LoggedInUser.getId();
         LOGGER.info("Update category \"{}\" (id = {}) for user with id = {}", category.getName(), category.getId(), userId);
         service.updateCategory(category, userId);
+    }
+
+    Category getCategory(int categoryId) {
+        int userId = LoggedInUser.getId();
+        LOGGER.info("Get category with id = {} for user with id = {}", categoryId, userId);
+        return service.getCategory(categoryId, userId);
     }
 
     void deleteCategory(int categoryId) {
@@ -78,7 +84,7 @@ public class NotesController {
         return service.getCategoryNotes(categoryId, userId);
     }
 
-    List<Note> getUserNotes(){
+    List<Note> getUserNotes() {
         int userId = LoggedInUser.getId();
         LOGGER.info("Get all notes for user with id = {}", userId);
         return service.getUserNotes(userId);
