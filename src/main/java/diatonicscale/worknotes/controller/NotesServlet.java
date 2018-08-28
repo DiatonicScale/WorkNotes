@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class NotesServlet extends HttpServlet {
-    private static Logger LOGGER = LoggerFactory.getLogger(UserServlet.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(NotesServlet.class);
 
     private NotesController notesController;
     private ConfigurableApplicationContext context;
