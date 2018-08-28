@@ -13,4 +13,13 @@
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>NotesServlet</servlet-name>
+        <servlet-class>diatonicscale.worknotes.controller.NotesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>NotesServlet</servlet-name>
+        <url-pattern>/notes</url-pattern>
+    </servlet-mapping>
+
 </web-app>

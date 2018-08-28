@@ -9,6 +9,6 @@
 
     <context:component-scan base-package="diatonicscale.**.service"/>
 
-    <!-- <context:component-scan base-package="diatonicscale.**.web"/> -->
+    <context:component-scan base-package="diatonicscale.**.controller"/>
 
 </beans>

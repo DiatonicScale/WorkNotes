@@ -58,10 +58,12 @@ public class MockNotesRepository implements NotesRepository {
         if (categoryMap == null) {
             categoryMap = new ConcurrentHashMap<>();
             categoryMap.put(categoryId, category);
+            categoryNotes.put(categoryId, new ConcurrentHashMap<>());
             userCategories.put(userId, categoryMap);
         }
         else {
             categoryMap.put(categoryId, category);
+            categoryNotes.put(categoryId, new ConcurrentHashMap<>());
         }
         return category;
     }

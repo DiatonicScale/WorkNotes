@@ -18,6 +18,11 @@ public class JdbcNotesRepImpl implements NotesRepository {
     }
 
     @Override
+    public Category getCategory(int categoryId, int userId) {
+        return null;
+    }
+
+    @Override
     public boolean deleteCategory(int categoryId, int userId) {
         return false;
     }

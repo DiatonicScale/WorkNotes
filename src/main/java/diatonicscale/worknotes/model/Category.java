@@ -5,7 +5,8 @@ import java.util.List;
 
 public class Category {
     private Integer id;
-    private int userId;
+
+    private Integer userId;
 
     private String name;
 
@@ -24,6 +25,14 @@ public class Category {
         this.lastEditTime = lastEditTime;
     }
 
+    public String getCreationTime() {
+        return creationTime == null ? "" : creationTime.toString(); // TODO
+    }
+
+    public String getLastEditTime() {
+        return lastEditTime.toString(); // TODO
+    }
+
     public Integer getId() {
         return id;
     }
@@ -34,5 +43,9 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public Integer getUserId() {
+        return userId;
     }
 }

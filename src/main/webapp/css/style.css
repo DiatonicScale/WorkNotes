@@ -1,0 +1,22 @@
+.note {
+    width: 80%;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin-top: 10px;
+    background-color: azure;
+}
+
+.categoryName {
+    color: red;
+}
+
+.date {
+    font-size: small;
+    color: #9A9A9A;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: black; /* line color */
+}
