@@ -20,7 +20,7 @@ CREATE UNIQUE INDEX unique_name ON users (name);
 CREATE TABLE users_roles
 (
   user_id INTEGER NOT NULL,
-  role VARCHAR,
+  role VARCHAR NOT NULL,
   CONSTRAINT users_roles_con UNIQUE (user_id, role),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
@@ -39,7 +39,7 @@ CREATE TABLE notes
 (
   id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
   category_id INTEGER NOT NULL,
-  name VARCHAR NOT NULL,
+  name VARCHAR,
   value VARCHAR NOT NULL,
   creation_time TIMESTAMP DEFAULT now(),
   last_edit_time TIMESTAMP DEFAULT now(),
