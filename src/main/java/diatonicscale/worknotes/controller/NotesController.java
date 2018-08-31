@@ -5,6 +5,7 @@
 
 package diatonicscale.worknotes.controller;
 
+import diatonicscale.worknotes.exception.RepositoryException;
 import diatonicscale.worknotes.model.Category;
 import diatonicscale.worknotes.model.Note;
 import diatonicscale.worknotes.service.NotesService;
@@ -23,7 +24,7 @@ public class NotesController {
     private NotesService service;
 
     // Categories
-    Category addCategory(Category category) {
+    Category addCategory(Category category) throws RepositoryException {
         int userId = LoggedInUser.getId();
         LOGGER.info("Add category \"{}\" for user with id = {}", category.getName(), userId);
         return service.addCategory(category, userId);
@@ -66,10 +67,10 @@ public class NotesController {
         service.updateNote(note, categoryId, userId);
     }
 
-    void deleteNote(int noteId, int categoryId) {
+    void deleteNote(int noteId) {
         int userId = LoggedInUser.getId();
         LOGGER.info("Delete note with id = {} for user with id = {}", noteId, userId);
-        service.deleteNote(noteId, categoryId, userId);
+        service.deleteNote(noteId, userId);
     }
 
     void deleteCategoryNotes(int categoryId) {
@@ -90,9 +91,9 @@ public class NotesController {
         return service.getUserNotes(userId);
     }
 
-    Note getNote(int noteId, int categoryId) {
+    Note getNote(int noteId) {
         int userId = LoggedInUser.getId();
-        LOGGER.info("Get note with id = {} from category with id = {} for user with id = {}", noteId, categoryId, userId);
-        return service.getNote(noteId, categoryId, userId);
+        LOGGER.info("Get note with id = {} for user with id = {}", noteId, userId);
+        return service.getNote(noteId, userId);
     }
 }

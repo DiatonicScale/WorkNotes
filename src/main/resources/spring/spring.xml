@@ -5,7 +5,9 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="diatonicscale.**.repository"/>
+    <context:component-scan base-package="diatonicscale.**.repository.jdbc"/>
+
+    <context:component-scan base-package="diatonicscale.**.repository.mock"/>
 
     <context:component-scan base-package="diatonicscale.**.service"/>
 

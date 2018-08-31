@@ -26,8 +26,8 @@
         <hr>
         <p>${note.value}</p>
         <hr>
-        <p><a href="notes?action=deleteNote&id=${note.id}&categoryId=${note.parentCategoryId}&allNotes=true">Удалить</a></p>
-        <p><a href="notes?action=updateNote&id=${note.id}&categoryId=${note.parentCategoryId}">Редактировать</a> (Дата последнего изменения: ${note.creationTime})</p>
+        <p><a href="notes?action=deleteNote&id=${note.id}&categoryId=${note.categoryId}&allNotes=true">Удалить</a></p>
+        <p><a href="notes?action=updateNote&id=${note.id}&categoryId=${note.categoryId}">Редактировать</a> (Дата последнего изменения: ${note.creationTime})</p>
     </div>
 </c:forEach>
 

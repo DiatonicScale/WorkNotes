@@ -14,7 +14,7 @@
     <jsp:useBean id="note" type="diatonicscale.worknotes.model.Note" scope="request"/>
     <form method="post" action="notes?action=saveNote">
         <input type="hidden" name="id" value="${note.id}">
-        <input type="hidden" name="parentCategoryId" value="${note.parentCategoryId}">
+        <input type="hidden" name="categoryId" value="${note.categoryId}">
         <dl>
             <dt>Навание:</dt>
             <dd><input type="name" value="${note.name}" name="name"></dd>

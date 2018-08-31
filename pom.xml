@@ -101,7 +101,11 @@
 
 
         <!--DataBase-->
-
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.2</version>
+        </dependency>
 
         <!--Test-->
         <dependency>
@@ -110,6 +114,13 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
 
         <!--JAXB (for Java 9) - TODO: Find how to do it another way-->
