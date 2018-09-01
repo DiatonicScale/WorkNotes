@@ -120,10 +120,11 @@ public class MockNotesRepository implements NotesRepository {
     }
 
     @Override
-    public boolean deleteNote(int noteId, int categoryId, int userId) {
-        Map<Integer, Note> noteMap = categoryNotes.get(categoryId);
+    public boolean deleteNote(int noteId, int userId) {
+        /*Map<Integer, Note> noteMap = categoryNotes.get(categoryId);
         return  noteMap != null
-                && noteMap.remove(noteId) != null;
+                && noteMap.remove(noteId) != null;*/
+        return false;
     }
 
     @Override
@@ -154,8 +155,9 @@ public class MockNotesRepository implements NotesRepository {
     }
 
     @Override
-    public Note getNote(int noteId, int categoryId, int userId) {
-        Map<Integer, Note> noteMap = categoryNotes.get(categoryId);
-        return noteMap == null ? null : noteMap.get(noteId);
+    public Note getNote(int noteId, int userId) {
+        /*Map<Integer, Note> noteMap = categoryNotes.get(categoryId);
+        return noteMap == null ? null : noteMap.get(noteId);*/
+        return null;
     }
 }
