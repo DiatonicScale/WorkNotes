@@ -5,7 +5,6 @@
 
 package diatonicscale.worknotes.repository.jdbc;
 
-import diatonicscale.worknotes.exception.RepositoryException;
 import diatonicscale.worknotes.model.Category;
 import diatonicscale.worknotes.model.Note;
 import diatonicscale.worknotes.repository.NotesRepository;
@@ -23,7 +22,7 @@ public class JdbcNotesRepository implements NotesRepository {
     ConnectionFactory connectionFactory;
 
     @Override
-    public Category saveCategory(Category category, int userId) throws RepositoryException {
+    public Category saveCategory(Category category, int userId) throws SQLException {
         try (Connection conn = connectionFactory.getConnection();) {
             if (category.getId() == null) {
                 try (PreparedStatement st = conn.prepareStatement("INSERT INTO categories (user_id, name) " +
@@ -45,16 +44,14 @@ public class JdbcNotesRepository implements NotesRepository {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
         }
         return null;
     }
 
     @Override
-    public Category getCategory(int categoryId, int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT * " +
+    public Category getCategory(int categoryId, int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("SELECT * " +
                                                               "FROM categories " +
                                                               "WHERE id=? AND user_id=?");) {
                 st.setInt(1, categoryId);
@@ -66,15 +63,12 @@ public class JdbcNotesRepository implements NotesRepository {
                         result.getString("name"), result.getTimestamp("creation_time").toLocalDateTime(),
                         result.getTimestamp("last_edit_time").toLocalDateTime());
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
     }
 
     @Override
-    public boolean deleteCategory(int categoryId, int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("DELETE FROM categories " +
+    public boolean deleteCategory(int categoryId, int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("DELETE FROM categories " +
                                                               "WHERE id=? AND user_id=?");) {
                 st.setInt(1, categoryId);
                 st.setInt(2, userId);
@@ -82,16 +76,13 @@ public class JdbcNotesRepository implements NotesRepository {
                     return true;
                 }
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
         return false;
     }
 
     @Override
-    public List<Category> getUserCategories(int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT * " +
+    public List<Category> getUserCategories(int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("SELECT * " +
                                                               "FROM categories " +
                                                               "WHERE user_id=?");) {
                 st.setInt(1, userId);
@@ -104,13 +95,10 @@ public class JdbcNotesRepository implements NotesRepository {
                 }
                 return userCategories;
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
     }
 
     @Override
-    public Note saveNote(Note note, int categoryId, int userId) throws RepositoryException {
+    public Note saveNote(Note note, int categoryId, int userId) throws SQLException {
         try (Connection conn = connectionFactory.getConnection();) {
             if (!isUsersCategory(conn, categoryId, userId))
                 return null;
@@ -136,16 +124,14 @@ public class JdbcNotesRepository implements NotesRepository {
                     }
                 }
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
         }
         return null;
     }
 
     @Override
-    public boolean deleteNote(int noteId, int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("DELETE FROM notes " +
+    public boolean deleteNote(int noteId, int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("DELETE FROM notes " +
                                                               "WHERE id=? AND category_id IN (SELECT id " +
                                                                                              "FROM categories " +
                                                                                              "WHERE user_id=?)");) {
@@ -155,16 +141,13 @@ public class JdbcNotesRepository implements NotesRepository {
                     return true;
                 }
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
         return false;
     }
 
     @Override
-    public boolean deleteCategoryNotes(int categoryId, int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("DELETE FROM notes " +
+    public boolean deleteCategoryNotes(int categoryId, int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("DELETE FROM notes " +
                                                               "WHERE category_id=? AND category_id IN (SELECT id " +
                                                                                                       "FROM categories " +
                                                                                                       "WHERE user_id=?)");) {
@@ -174,16 +157,13 @@ public class JdbcNotesRepository implements NotesRepository {
                     return true;
                 }
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
         return false;
     }
 
     @Override
-    public List<Note> getCategoryNotes(int categoryId, int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT * " +
+    public List<Note> getCategoryNotes(int categoryId, int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("SELECT * " +
                                                               "FROM notes " +
                                                               "WHERE category_id=? AND category_id IN (SELECT id " +
                                                                                                       "FROM categories " +
@@ -199,15 +179,12 @@ public class JdbcNotesRepository implements NotesRepository {
                 }
                 return noteList;
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
     }
 
     @Override
-    public List<Note> getUserNotes(int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT * " +
+    public List<Note> getUserNotes(int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("SELECT * " +
                                                               "FROM notes " +
                                                               "WHERE category_id IN (SELECT id " +
                                                                                     "FROM categories " +
@@ -221,15 +198,12 @@ public class JdbcNotesRepository implements NotesRepository {
                             resultSet.getTimestamp("last_edit_time").toLocalDateTime(), resultSet.getString("value")));
                 return noteList;
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
     }
 
     @Override
-    public Note getNote(int noteId, int userId) throws RepositoryException {
-        try (Connection conn = connectionFactory.getConnection();) {
-            try (PreparedStatement st = conn.prepareStatement("SELECT * " +
+    public Note getNote(int noteId, int userId) throws SQLException {
+            try (Connection conn = connectionFactory.getConnection();
+                 PreparedStatement st = conn.prepareStatement("SELECT * " +
                                                               "FROM notes " +
                                                               "WHERE category_id IN (SELECT id " +
                                                                                     "FROM categories " +
@@ -244,9 +218,6 @@ public class JdbcNotesRepository implements NotesRepository {
                         resultSet.getString("name"), resultSet.getTimestamp("creation_time").toLocalDateTime(),
                         resultSet.getTimestamp("last_edit_time").toLocalDateTime(), resultSet.getString("value"));
             }
-        } catch (SQLException e) {
-            throw new RepositoryException("", e);
-        }
     }
 
     private boolean isUsersCategory(Connection conn, int categoryId, int userId) throws SQLException {

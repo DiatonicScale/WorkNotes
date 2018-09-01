@@ -5,7 +5,6 @@
 
 package diatonicscale.worknotes.controller;
 
-import diatonicscale.worknotes.exception.RepositoryException;
 import diatonicscale.worknotes.model.Category;
 import diatonicscale.worknotes.model.Note;
 import org.slf4j.Logger;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -57,10 +57,14 @@ public class NotesServlet extends HttpServlet {
                     id.isEmpty() ? now : LocalDateTime.parse(request.getParameter("creationTime")),
                     now,
                     request.getParameter("value"));
-            if (note.getId() == null)
-                notesController.addNote(note, categoryId);
-            else
-                notesController.updateNote(note, categoryId);
+            try {
+                if (note.getId() == null)
+                    notesController.addNote(note, categoryId);
+                else
+                    notesController.updateNote(note, categoryId);
+            } catch (SQLException e) {
+                catchSQLException(e, request, responce);
+            }
             responce.sendRedirect("notes");
         } else if (action.equals("saveCategory")) {
             LocalDateTime now = LocalDateTime.now();
@@ -69,17 +73,15 @@ public class NotesServlet extends HttpServlet {
                     request.getParameter("name"),
                     id.isEmpty() ? now : LocalDateTime.parse(request.getParameter("creationTime")),
                     now);
-            if (category.getId() == null) {
-                try {
+            try {
+                if (category.getId() == null) {
                     notesController.addCategory(category);
-                } catch (RepositoryException e) {
-                    // logging
-                    // redirect to error page
-                    e.printStackTrace();
+                } else {
+                    notesController.updateCategory(category);
                 }
+            } catch (SQLException e) {
+                catchSQLException(e, request, responce);
             }
-            else
-                notesController.updateCategory(category);
             responce.sendRedirect("notes");
         }
     }
@@ -88,64 +90,73 @@ public class NotesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        if (action == null) {
-            request.setAttribute("userCategories", notesController.getUserCategories());
-            request.getRequestDispatcher("/WEB-INF/jsp/categories.jsp").forward(request, responce);
-            return;
-        }
+        try {
+            if (action == null) {
+                request.setAttribute("userCategories", notesController.getUserCategories());
+                request.getRequestDispatcher("/WEB-INF/jsp/categories.jsp").forward(request, responce);
+                return;
+            }
 
-        switch (action) {
-            case "deleteCategory":
-                notesController.deleteCategory(getId(request));
-                responce.sendRedirect("notes");
-                break;
-            case "addCategory":
-            case "updateCategory":
-                Category category = (request.getParameter("id") == null
-                        ? new Category(LoggedInUser.getId(), "", null, null)
-                        : notesController.getCategory(getId(request)));
-                request.setAttribute("category", category);
-                request.getRequestDispatcher("/WEB-INF/jsp/editCategory.jsp").forward(request, responce);
-                break;
-            case "categoryNotes":
-                List<Note> categoryNotes = notesController.getCategoryNotes(getId(request));
-                request.setAttribute("isEmpty", categoryNotes.isEmpty());
-                request.setAttribute("category", notesController.getCategory(getId(request)));
-                request.setAttribute("categoryNotes", categoryNotes);
-                request.getRequestDispatcher("/WEB-INF/jsp/notes.jsp").forward(request, responce);
-                break;
-            case "allNotes":
-                List<Note> allNotes = notesController.getUserNotes();
-                request.setAttribute("isEmpty", allNotes.isEmpty());
-                request.setAttribute("userNotes", allNotes);
-                request.getRequestDispatcher("/WEB-INF/jsp/allNotes.jsp").forward(request, responce);
-                break;
-            case "addNote":
-            case "updateNote":
-                Note note = (request.getParameter("id") == null
-                        ? new Note(Integer.valueOf(request.getParameter("categoryId")), "", null, null, "")
-                        : notesController.getNote(getId(request)));
-                request.setAttribute("note", note);
-                request.getRequestDispatcher("/WEB-INF/jsp/editNote.jsp").forward(request, responce);
-                break;
-            case "deleteNote":
-                int categoryId = Integer.valueOf(request.getParameter("categoryId"));
-                notesController.deleteNote(getId(request));
-                if (request.getParameter("allNotes") != null) {
-                    responce.sendRedirect("notes?action=allNotes");
-                    return;
-                }
-                responce.sendRedirect("notes?action=categoryNotes&id=" + categoryId);
-                break;
-            case "deleteCategoryNotes":
-                notesController.deleteCategoryNotes(getId(request));
-                responce.sendRedirect("notes?action=categoryNotes&id=" + getId(request));
-                break;
+            switch (action) {
+                case "deleteCategory":
+                    notesController.deleteCategory(getId(request));
+                    responce.sendRedirect("notes");
+                    break;
+                case "addCategory":
+                case "updateCategory":
+                    Category category = (request.getParameter("id") == null
+                            ? new Category(LoggedInUser.getId(), "", null, null)
+                            : notesController.getCategory(getId(request)));
+                    request.setAttribute("category", category);
+                    request.getRequestDispatcher("/WEB-INF/jsp/editCategory.jsp").forward(request, responce);
+                    break;
+                case "categoryNotes":
+                    List<Note> categoryNotes = notesController.getCategoryNotes(getId(request));
+                    request.setAttribute("isEmpty", categoryNotes.isEmpty());
+                    request.setAttribute("category", notesController.getCategory(getId(request)));
+                    request.setAttribute("categoryNotes", categoryNotes);
+                    request.getRequestDispatcher("/WEB-INF/jsp/notes.jsp").forward(request, responce);
+                    break;
+                case "allNotes":
+                    List<Note> allNotes = notesController.getUserNotes();
+                    request.setAttribute("isEmpty", allNotes.isEmpty());
+                    request.setAttribute("userNotes", allNotes);
+                    request.getRequestDispatcher("/WEB-INF/jsp/allNotes.jsp").forward(request, responce);
+                    break;
+                case "addNote":
+                case "updateNote":
+                    Note note = (request.getParameter("id") == null
+                            ? new Note(Integer.valueOf(request.getParameter("categoryId")), "", null, null, "")
+                            : notesController.getNote(getId(request)));
+                    request.setAttribute("note", note);
+                    request.getRequestDispatcher("/WEB-INF/jsp/editNote.jsp").forward(request, responce);
+                    break;
+                case "deleteNote":
+                    int categoryId = Integer.valueOf(request.getParameter("categoryId"));
+                    notesController.deleteNote(getId(request));
+                    if (request.getParameter("allNotes") != null) {
+                        responce.sendRedirect("notes?action=allNotes");
+                        return;
+                    }
+                    responce.sendRedirect("notes?action=categoryNotes&id=" + categoryId);
+                    break;
+                case "deleteCategoryNotes":
+                    notesController.deleteCategoryNotes(getId(request));
+                    responce.sendRedirect("notes?action=categoryNotes&id=" + getId(request));
+                    break;
+            }
+        } catch (SQLException e) {
+            catchSQLException(e, request, responce);
         }
     }
 
     private int getId(HttpServletRequest request) {
         String id = Objects.requireNonNull(request.getParameter("id"));
         return Integer.valueOf(id);
+    }
+
+    private void catchSQLException(Exception e, HttpServletRequest request, HttpServletResponse responce) throws ServletException, IOException {
+        LOGGER.error("Data Access error, reason: {}", e.getMessage());
+        request.getRequestDispatcher("/WEB-INF/jsp/dbError.jsp").forward(request, responce);
     }
 }

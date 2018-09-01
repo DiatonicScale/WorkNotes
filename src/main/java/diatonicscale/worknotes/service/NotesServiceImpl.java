@@ -6,7 +6,6 @@
 package diatonicscale.worknotes.service;
 
 import diatonicscale.worknotes.exception.NotesServiceException;
-import diatonicscale.worknotes.exception.RepositoryException;
 import diatonicscale.worknotes.model.Category;
 import diatonicscale.worknotes.model.Note;
 import diatonicscale.worknotes.repository.NotesRepository;
@@ -15,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -25,7 +25,7 @@ public class NotesServiceImpl implements NotesService {
     private NotesRepository repository;
 
     @Override
-    public Category addCategory(Category category, int userId) throws RepositoryException {
+    public Category addCategory(Category category, int userId) throws SQLException {
         Category addedCategory = repository.saveCategory(category, userId);
         if (addedCategory == null) {
             LOGGER.error("Category not added");
@@ -35,7 +35,7 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public void updateCategory(Category category, int userId) throws RepositoryException {
+    public void updateCategory(Category category, int userId) throws SQLException {
         if (repository.saveCategory(category, userId) == null) {
             LOGGER.error("Category not updated, id = " + category.getId());
             throw new NotesServiceException("Can't update category, id = " + category.getId());
@@ -43,7 +43,7 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public Category getCategory(int categoryId, int userId) throws RepositoryException {
+    public Category getCategory(int categoryId, int userId) throws SQLException {
         Category category = repository.getCategory(categoryId, userId);
         if (category == null) {
             LOGGER.error("Category with id = " + categoryId + "not found");
@@ -53,7 +53,7 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public void deleteCategory(int categoryId, int userId) throws RepositoryException {
+    public void deleteCategory(int categoryId, int userId) throws SQLException {
         if (!repository.deleteCategory(categoryId, userId)) {
             LOGGER.error("Category not deleted, id = " + categoryId);
             throw new NotesServiceException("Can't delete category, id = " + categoryId);
@@ -61,12 +61,12 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public List<Category> getUserCategories(int userId) throws RepositoryException {
+    public List<Category> getUserCategories(int userId) throws SQLException {
         return repository.getUserCategories(userId);
     }
 
     @Override
-    public Note addNote(Note note, int categoryId, int userId) throws RepositoryException {
+    public Note addNote(Note note, int categoryId, int userId) throws SQLException {
         Note addedNote = repository.saveNote(note, categoryId, userId);
         if (addedNote == null) {
             LOGGER.error("Note not added");
@@ -76,7 +76,7 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public void updateNote(Note note, int categoryId, int userId) throws RepositoryException {
+    public void updateNote(Note note, int categoryId, int userId) throws SQLException {
         if (repository.saveNote(note, categoryId, userId) == null) {
             LOGGER.error("Note not updated, id = " + note.getId());
             throw new NotesServiceException("Can't update note, id = " + note.getId());
@@ -84,7 +84,7 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public void deleteNote(int noteId, int userId) throws RepositoryException {
+    public void deleteNote(int noteId, int userId) throws SQLException {
         if (!repository.deleteNote(noteId, userId)) {
             LOGGER.error("Note not deleted, id = " + noteId);
             throw new NotesServiceException("Can't delete note, id = " + noteId);
@@ -92,7 +92,7 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public void deleteCategoryNotes(int categoryId, int userId) throws RepositoryException {
+    public void deleteCategoryNotes(int categoryId, int userId) throws SQLException {
         if (!repository.deleteCategoryNotes(categoryId, userId)) {
             LOGGER.error("Notes from category with id = " + categoryId + " not deleted");
             throw new NotesServiceException("Can't delete notes from category with id = " + categoryId);
@@ -100,17 +100,17 @@ public class NotesServiceImpl implements NotesService {
     }
 
     @Override
-    public List<Note> getCategoryNotes(int categoryId, int userId) throws RepositoryException {
+    public List<Note> getCategoryNotes(int categoryId, int userId) throws SQLException {
         return repository.getCategoryNotes(categoryId, userId);
     }
 
     @Override
-    public List<Note> getUserNotes(int userId) throws RepositoryException {
+    public List<Note> getUserNotes(int userId) throws SQLException {
         return repository.getUserNotes(userId);
     }
 
     @Override
-    public Note getNote(int noteId, int userId) throws RepositoryException {
+    public Note getNote(int noteId, int userId) throws SQLException {
         Note note = repository.getNote(noteId, userId);
         if (note == null) {
             LOGGER.error("Note with id = " + noteId + " not found");
