@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,12 +49,9 @@ public class NotesServlet extends HttpServlet {
         String id = request.getParameter("id");
         if (action.equals("saveNote")) {
             int categoryId = Integer.valueOf(request.getParameter("categoryId"));
-            LocalDateTime now = LocalDateTime.now();
             Note note = new Note(id.isEmpty() ? null : Integer.valueOf(id),
                     categoryId,
                     request.getParameter("name"),
-                    id.isEmpty() ? now : LocalDateTime.parse(request.getParameter("creationTime")),
-                    now,
                     request.getParameter("value"));
             try {
                 if (note.getId() == null)
@@ -67,12 +63,9 @@ public class NotesServlet extends HttpServlet {
             }
             responce.sendRedirect("notes");
         } else if (action.equals("saveCategory")) {
-            LocalDateTime now = LocalDateTime.now();
             Category category = new Category(id.isEmpty() ? null : Integer.valueOf(id),
                     LoggedInUser.getId(),
-                    request.getParameter("name"),
-                    id.isEmpty() ? now : LocalDateTime.parse(request.getParameter("creationTime")),
-                    now);
+                    request.getParameter("name"));
             try {
                 if (category.getId() == null) {
                     notesController.addCategory(category);

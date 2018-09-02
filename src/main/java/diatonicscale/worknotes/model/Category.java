@@ -1,7 +1,8 @@
 package diatonicscale.worknotes.model;
 
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Category {
     private Integer id;
@@ -12,6 +13,12 @@ public class Category {
 
     private LocalDateTime creationTime;
     private LocalDateTime lastEditTime;
+
+    public Category () {}
+
+    public Category(Integer id, int userId, String name) {
+        this(id, userId, name, null, null);
+    }
 
     public Category(int userId, String name, LocalDateTime creationTime, LocalDateTime lastEditTime) {
         this(null, userId, name, creationTime, lastEditTime);
@@ -47,5 +54,17 @@ public class Category {
 
     public Integer getUserId() {
         return userId;
+    }
+
+    public void setCreationTime(String creationTime) {
+        this.creationTime = Timestamp.valueOf(creationTime).toLocalDateTime();
+    }
+
+    public void setLastEditTime(String lastEditTime) {
+        this.lastEditTime = Timestamp.valueOf(lastEditTime).toLocalDateTime();
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

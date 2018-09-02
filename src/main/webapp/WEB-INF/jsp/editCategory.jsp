@@ -19,7 +19,6 @@
             <dt>Навание категории:</dt>
             <dd><input type="text" value="${category.name}" name="name"></dd>
         </dl>
-        <input type="hidden" name="creationTime" value="${category.creationTime}">
         <button type="submit">Сохранить</button>
         <button onclick="window.history.back()">Отмена</button>
     </form>

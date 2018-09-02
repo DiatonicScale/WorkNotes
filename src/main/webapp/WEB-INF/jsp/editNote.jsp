@@ -23,7 +23,6 @@
             <dt>Содержимое:</dt>
             <dd><textarea name="value">${note.value}</textarea></dd>
         </dl>
-        <input type="hidden" name="creationTime" value="${note.creationTime}">
         <button type="submit">Сохранить</button>
         <button onclick="window.history.back()">Отмена</button>
     </form>

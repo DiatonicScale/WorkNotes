@@ -1,5 +1,6 @@
 package diatonicscale.worknotes.model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Note {
@@ -13,6 +14,12 @@ public class Note {
     private LocalDateTime lastEditTime;
 
     private String value;
+
+    public Note() {}
+
+    public Note(Integer id, Integer categoryId, String name, String value) {
+        this(id, categoryId, name, null, null, value);
+    }
 
     public Note(Integer categoryId, String name, LocalDateTime creationTime, LocalDateTime lastEditTime, String value) {
         this(null, categoryId, name, creationTime, lastEditTime, value);
@@ -55,5 +62,25 @@ public class Note {
 
     public String getLastEditTime() {
         return lastEditTime.toString(); // TODO
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCreationTime(String creationTime) {
+        this.creationTime = Timestamp.valueOf(creationTime).toLocalDateTime();
+    }
+
+    public void setLastEditTime(String lastEditTime) {
+        this.lastEditTime = Timestamp.valueOf(lastEditTime).toLocalDateTime();
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
