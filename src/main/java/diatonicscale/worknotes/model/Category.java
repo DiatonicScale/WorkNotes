@@ -56,15 +56,30 @@ public class Category {
         return userId;
     }
 
-    public void setCreationTime(String creationTime) {
-        this.creationTime = Timestamp.valueOf(creationTime).toLocalDateTime();
-    }
-
-    public void setLastEditTime(String lastEditTime) {
-        this.lastEditTime = Timestamp.valueOf(lastEditTime).toLocalDateTime();
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public void setLastEditTime(LocalDateTime lastEditTime) {
+        this.lastEditTime = lastEditTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category category = (Category) o;
+
+        return id.equals(category.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

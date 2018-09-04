@@ -5,9 +5,11 @@ import java.time.LocalDateTime;
 
 public class Note {
     private Integer id;
+
     private Integer categoryId;
 
     private String name;
+
     //private List<Source> sources; // TODO: adding information source (book, person, blog) + filter by source
     //private boolean importance = false;
     private LocalDateTime creationTime;
@@ -72,15 +74,30 @@ public class Note {
         this.name = name;
     }
 
-    public void setCreationTime(String creationTime) {
-        this.creationTime = Timestamp.valueOf(creationTime).toLocalDateTime();
-    }
-
-    public void setLastEditTime(String lastEditTime) {
-        this.lastEditTime = Timestamp.valueOf(lastEditTime).toLocalDateTime();
-    }
-
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public void setLastEditTime(LocalDateTime lastEditTime) {
+        this.lastEditTime = lastEditTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Note note = (Note) o;
+
+        return id.equals(note.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

@@ -9,6 +9,7 @@ import diatonicscale.worknotes.model.Category;
 import diatonicscale.worknotes.model.Note;
 import diatonicscale.worknotes.repository.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -84,9 +85,10 @@ public class SpringJdbcNotesRepository implements NotesRepository {
 
     @Override
     public Category getCategory(int categoryId, int userId) {
-        return jdbcTemplate.queryForObject("SELECT * " +
-                                           "FROM categories " +
-                                           "WHERE id=? AND user_id=?", CATEGORY_MAPPER, categoryId, userId);
+        List<Category> categoryList = jdbcTemplate.query("SELECT * " +
+                                                         "FROM categories " +
+                                                         "WHERE id=? AND user_id=?", CATEGORY_MAPPER, categoryId, userId);
+        return DataAccessUtils.singleResult(categoryList);
     }
 
     @Override
@@ -150,7 +152,8 @@ public class SpringJdbcNotesRepository implements NotesRepository {
                                   "FROM notes " +
                                   "WHERE category_id=? AND category_id IN (SELECT id " +
                                                                           "FROM categories " +
-                                                                          "WHERE user_id=?)", NOTE_MAPPER, categoryId, userId);
+                                                                          "WHERE user_id=?) " +
+                                  "ORDER BY last_edit_time DESC", NOTE_MAPPER, categoryId, userId);
     }
 
     @Override
@@ -159,15 +162,17 @@ public class SpringJdbcNotesRepository implements NotesRepository {
                                   "FROM notes " +
                                   "WHERE category_id IN (SELECT id " +
                                                         "FROM categories " +
-                                                        "WHERE user_id=?)", NOTE_MAPPER, userId);
+                                                        "WHERE user_id=?)" +
+                                  "ORDER BY last_edit_time DESC", NOTE_MAPPER, userId);
     }
 
     @Override
     public Note getNote(int noteId, int userId) {
-        return jdbcTemplate.queryForObject("SELECT * " +
-                                           "FROM notes " +
-                                           "WHERE id=? AND category_id IN (SELECT id " +
-                                                                           "FROM categories " +
-                                                                           "WHERE user_id=?)", NOTE_MAPPER, noteId, userId);
+        List<Note> noteList = jdbcTemplate.query("SELECT * " +
+                                                 "FROM notes " +
+                                                 "WHERE id=? AND category_id IN (SELECT id " +
+                                                                                "FROM categories " +
+                                                                                "WHERE user_id=?)", NOTE_MAPPER, noteId, userId);
+        return DataAccessUtils.singleResult(noteList);
     }
 }

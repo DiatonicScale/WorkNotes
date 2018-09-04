@@ -46,7 +46,7 @@ public class NotesServiceImpl implements NotesService {
     public Category getCategory(int categoryId, int userId) throws SQLException {
         Category category = repository.getCategory(categoryId, userId);
         if (category == null) {
-            LOGGER.error("Category with id = " + categoryId + "not found");
+            LOGGER.error("Category with id = " + categoryId + " not found");
             throw new NotesServiceException("Can't find category with id = " + categoryId);
         }
         return category;
