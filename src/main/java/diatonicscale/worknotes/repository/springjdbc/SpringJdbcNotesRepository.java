@@ -11,20 +11,41 @@ import diatonicscale.worknotes.repository.NotesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 @Repository
 public class SpringJdbcNotesRepository implements NotesRepository {
 
-    private static final BeanPropertyRowMapper<Note> NOTE_MAPPER = BeanPropertyRowMapper.newInstance(Note.class);
-    private static final BeanPropertyRowMapper<Category> CATEGORY_MAPPER = BeanPropertyRowMapper.newInstance(Category.class);
-
+    private static final RowMapper<Note> NOTE_MAPPER = new RowMapper<Note>() {
+        @Override
+        public Note mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Note(rs.getInt("id"),
+                    rs.getInt("category_id"),
+                    rs.getString("name"),
+                    rs.getTimestamp("creation_time").toLocalDateTime(),
+                    rs.getTimestamp("last_edit_time").toLocalDateTime(),
+                    rs.getString("value"));
+        }
+    };
+    private static final RowMapper<Category> CATEGORY_MAPPER = new RowMapper<Category>() {
+        @Override
+        public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new Category(rs.getInt("id"),
+                    rs.getInt("user_id"),
+                    rs.getString("name"),
+                    rs.getTimestamp("creation_time").toLocalDateTime(),
+                    rs.getTimestamp("last_edit_time").toLocalDateTime());
+        }
+    };
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -78,7 +99,7 @@ public class SpringJdbcNotesRepository implements NotesRepository {
     public List<Category> getUserCategories(int userId) {
         return jdbcTemplate.query("SELECT * " +
                                   "FROM categories " +
-                                  "WHERE user_id=?", CATEGORY_MAPPER, userId);
+                                  "WHERE user_id=? ORDER BY last_edit_time DESC", CATEGORY_MAPPER, userId);
     }
 
     @Override
